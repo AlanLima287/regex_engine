@@ -1,0 +1,25 @@
+<expression>
+   : <expression> <expression>     -- Concatenation
+   | <expression> '|' <expression> -- Alternation
+   | <expression> <quantifier>     -- Quantifier
+   | '(' <expression> ')'          -- Group
+   | <character set>               -- Character Set
+   | <character>                   -- Character
+   ;
+
+<quantifier>
+   : '?' ['?']
+   | '*' ['?']
+   | '+' ['?']
+   | '{' <number> '}' ['?']
+   | '{' <number> [',' [<number>]] '}' ['?']
+   ;
+
+<character set>
+   : '.'
+   | '[' ['^'] (<character> | <character> '-' <character>) * ']'
+   ;
+
+<character>: /[^*+?|()[\]{}]/ | '\\' /[*+?|()[\]{}]/;
+
+<number>: /[0-9]+/;

@@ -1,0 +1,18 @@
+{
+   "files.associations": {
+      "bittools.h": "c",
+      "inttypes.h": "c",
+      "stdalign.h": "c",
+      "stddef.h": "c",
+      "stdint.h": "c",
+      "bit": "c",
+      "intrin.h": "c",
+      "iterator": "c",
+      "memory": "c",
+      "xutility": "c",
+      "vector.h": "c",
+      "interpreter.h": "c",
+      "stack.h": "c",
+      "stdlib.h": "c"
+   }
+}
