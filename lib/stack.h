@@ -4,11 +4,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+
 typedef struct {
    void* frame;
    size_t capacity;
    size_t top;
 } Stack;
+
+// #define stack_scaling_function(capacity) floor(capacity * 1.5)
+#define stack_scaling_function(capacity) (capacity + (capacity << 1))
 
 /* Initializes the stack.
  * @param  stack: a pointer to a stack structure
@@ -17,16 +21,22 @@ typedef struct {
  */
 bool stack_init(Stack* stack, size_t size);
 
-/* Increases the size of the stack.
+/* Reverse space for new elements at the top of the stack
  * @param  stack: a pointer to a stack structure
- * 
- * @warning DO NOT call this unless you know what you're doing
+ * @param  size:  at least the amount of bytes to be reserved for the stack
+ * @return        returns `true` on success, `false` otherwise
 */
-bool stack_expand(Stack* stack);
+bool stack_reserve(Stack* stack, size_t size);
+
+/* Reverse space for exacly `size` new elements at the top of the stack
+ * @param  stack: a pointer to a stack structure
+ * @param  size:  the amount of bytes to be reserved for the stack
+ * @return        returns `true` on success, `false` otherwise
+*/
+bool stack_reserve_exact(Stack* stack, size_t size);
 
 /* Clears the stack, by setting the top back to zero.
  * @param  stack: a pointer to a stack structure
- * @return        returns `true` on success, `false` otherwise
 */
 void stack_clear(Stack* stack) {
    stack->top = 0;

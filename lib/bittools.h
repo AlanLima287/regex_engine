@@ -14,13 +14,13 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#if __has_include("intrin.h") && (defined(_WIN32) || defined(_WIN64))
+#if __has_include("intrin.h")
    #include <intrin.h>
 #endif
 
 typedef unsigned long long mword;
 
-#define SHIFT (sizeof(mword) >= 4 ? ((sizeof(mword) >> 2) + 4) : (sizeof(mword) + 2))
+#define SHIFT 6 // (sizeof(mword) >= 4 ? ((sizeof(mword) >> 2) + 4) : (sizeof(mword) + 2))
 #define POWER (1ull << SHIFT)
 #define MASK  (POWER - 1)
 
