@@ -4,8 +4,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-
-typedef struct {
+typedef struct Stack {
    void* frame;
    size_t capacity;
    size_t top;

@@ -1,5 +1,5 @@
 #ifndef __STACK_DEF_
-   #include "stack.h"
+#include "stack.h"
 #else
 
 bool stack_init(Stack* stack, size_t size) {
@@ -13,7 +13,7 @@ bool stack_init(Stack* stack, size_t size) {
 bool stack_reserve(Stack* stack, size_t size) {
    do stack->capacity = stack_scaling_function(stack->capacity);
    while (stack->capacity < size + stack->top);
-   
+
    void* new_pointer = realloc(stack->frame, stack->capacity);
    if (new_pointer == NULL) return false;
 
@@ -23,7 +23,7 @@ bool stack_reserve(Stack* stack, size_t size) {
 
 bool stack_reserve_exact(Stack* stack, size_t size) {
    if (stack->top + size <= stack->capacity) return true;
-   
+
    stack->capacity = stack->top + size;
    void* new_pointer = realloc(stack->frame, stack->capacity);
    if (new_pointer == NULL) return false;
@@ -34,20 +34,22 @@ bool stack_reserve_exact(Stack* stack, size_t size) {
 
 void* stack_push(Stack* stack, size_t size) {
    if (stack->capacity < stack->top + size) stack_reserve(stack, size);
-   
+
    void* pointer = (void*)((uintptr_t)stack->frame + stack->top);
    stack->top += size;
 
    return pointer;
 }
 
-void* stack_peek(Stack* stack) {
-   return (void*)((uintptr_t)stack->frame + stack->top);
+void* stack_peek(Stack* stack, size_t size) {
+   return (void*)((stack->top < size) ? NULL : (uintptr_t)stack->frame + stack->top - size);
 }
 
 void* stack_pop(Stack* stack, size_t size) {
-   return (void*)((uintptr_t)stack->frame + stack->top);
+   if (stack->top < size) return (void*)NULL;
+
    stack->top -= size;
+   return (void*)((uintptr_t)stack->frame + stack->top);
 }
 
 #endif
