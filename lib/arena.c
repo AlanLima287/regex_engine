@@ -2,7 +2,7 @@
    #include "arena.h"
 #else
 
-bool create_arena(Arena* arena, size_t size) {
+bool arena_init(Arena* arena, size_t size) {
    arena->buffer = malloc(size);
    if (arena->buffer == NULL) return false;
 
@@ -11,16 +11,16 @@ bool create_arena(Arena* arena, size_t size) {
    return true;
 }
 
-void clear_arena(Arena* arena) {
+void arena_clear(Arena* arena) {
    arena->allocated = 0;
 }
 
-void delete_arena(Arena* arena) {
+void arena_free(Arena* arena) {
    free(arena->buffer);
    arena->buffer = NULL;
 }
 
-void* arena_allocate(Arena* arena, size_t size) {
+void* arena_alloc(Arena* arena, size_t size) {
    if (arena->allocated + size >= arena->capacity) return NULL;
 
    void* pointer = (void*)((uintptr_t)arena->buffer + (uintptr_t)arena->allocated);
@@ -29,7 +29,7 @@ void* arena_allocate(Arena* arena, size_t size) {
    return pointer;
 }
 
-void* arena_allocate_aligned(Arena* arena, size_t size, size_t alignment) {
+void* arena_alloc_aligned(Arena* arena, size_t size, size_t alignment) {
    size_t padding = ((arena->allocated + alignment - 1) & -alignment) - arena->allocated;
    if (arena->allocated + padding + size >= arena->capacity) return NULL;
 

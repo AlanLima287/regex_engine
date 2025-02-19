@@ -42,14 +42,22 @@ void* stack_push(Stack* stack, size_t size) {
 }
 
 void* stack_peek(Stack* stack, size_t size) {
-   return (void*)((stack->top < size) ? NULL : (uintptr_t)stack->frame + stack->top - size);
+   return stack->top < size ? NULL : (void*)((uintptr_t)stack->frame + stack->top - size);
 }
 
 void* stack_pop(Stack* stack, size_t size) {
-   if (stack->top < size) return (void*)NULL;
+   if (stack->top < size) return NULL;
 
    stack->top -= size;
    return (void*)((uintptr_t)stack->frame + stack->top);
+}
+
+void* stack_disown(Stack* stack) {
+   void* pointer = realloc(stack->frame, stack->top);
+   if (pointer == NULL) return NULL;
+
+   stack->frame = NULL;
+   return pointer;
 }
 
 #endif

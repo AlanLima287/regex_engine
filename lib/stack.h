@@ -57,9 +57,10 @@ void* stack_push(Stack* stack, size_t size);
 
 /* Peeks at the top of the stack
 * @param  stack: a pointer to a stack structure
+* @param  size:  the amount of bytes to be peeked on the stack
 * @return        returns a pointer to the area at the top of the stack
 */
-void* stack_peek(Stack* stack);
+void* stack_peek(Stack* stack, size_t size);
 
 /* Pops off the top of the stack
  * @param  stack: a pointer to a stack structure
@@ -67,6 +68,14 @@ void* stack_peek(Stack* stack);
  * @return        returns a pointer to the area at the top of the stack
 */
 void* stack_pop(Stack* stack, size_t size);
+
+/* Shrinks the frame to its minimal possible length and returns the frame
+ * @param  stack: a pointer to a stack structure
+ * @return        returns a pointer to the stack
+ * 
+ * @warning: once its called, the stack structure is no longer valid
+*/
+void* stack_disown(Stack* stack);
 
 #define __STACK_DEF_
    #include "stack.c"

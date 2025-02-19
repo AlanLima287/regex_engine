@@ -10,12 +10,12 @@ typedef struct {
    size_t capacity;
 } Arena;
 
-bool create_arena(Arena*, size_t);
-inline void clear_arena(Arena*);
-inline void delete_arena(Arena*);
+bool arena_init(Arena*, size_t);
+inline void arena_clear(Arena*);
+inline void arena_free(Arena*);
 
-void* arena_allocate(Arena*, size_t);
-void* arena_allocate_aligned(Arena*, size_t, size_t);
+void* arena_alloc(Arena*, size_t);
+void* arena_alloc_aligned(Arena*, size_t, size_t);
 
 #define __ARENA_DEF_
    #include "arena.c"
